@@ -1,9 +1,9 @@
-#Initial virtual environment installation
+# Initial virtual environment installation
 
 py -m pip insTALL --user virtualenv
 ## create
 py -m venv (name)
-# activate 
+## activate 
 .\(name)\scripts\activate
 ## deactive
 deactive
