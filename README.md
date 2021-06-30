@@ -21,3 +21,7 @@ py manage.py runserver
 ## create app
 py manage.py startapp (appname)
 
+##migration
+
+py manage.py makemigrations
+py manage.py migrate
