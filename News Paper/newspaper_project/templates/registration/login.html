@@ -9,5 +9,6 @@
     {% csrf_token %}
     {{ form.as_p }}
     <button class="btn btn-success ml-2" type="submit">Log In</button>
+    <button class="btn btn-success ml-2 " type="submit"> <a href="{% url 'password_reset' %}">Forget Password</a></button>
 </form>
 {% endblock content %} 
