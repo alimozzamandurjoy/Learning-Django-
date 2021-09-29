@@ -1,6 +1,8 @@
 from django.shortcuts import render
-
+from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+from django.core.exceptions import PermissionDenied
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.urls import reverse_lazy
@@ -29,6 +31,11 @@ class ArticleUpdateView(LoginRequiredMixin,UpdateView):
     template_name= 'article_edit.html'
     login_url= 'login'
 
+    def dispatch(self, request, *args, **kwargs): # new
+        obj = self.get_object()
+        if obj.author != self.request.user:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
     
 
 class ArticleDeleteView(LoginRequiredMixin,DeleteView):
@@ -36,6 +43,13 @@ class ArticleDeleteView(LoginRequiredMixin,DeleteView):
     template_name= 'article_delete.html'
     success_url= reverse_lazy('article_list')
     login_url= 'login'
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.author != self.request.user:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
 class ArticleCreateView(LoginRequiredMixin, CreateView):
     model= Article
     template_name= 'article_new.html'
